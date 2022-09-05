@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload="getUserCount()">
     <main class="resume-contents">
         <section class="left-section">
             <div class="left-section-contents">
@@ -33,15 +33,24 @@
                 <div class="contact-info">
                     <p class="left-title">Contact Info</p>
                     <ul>
-                        <li><i class="fa fa-phone"></i>074 2538 3099
+                        <li>
+                            <i class="fa fa-phone"></i>
+                            <a href="tel: 074 2538 3099">074 2538 3099</a>
                         </li>
-                        <li><i class="fa fa-envelope"></i><a
-                                href="mailto: buterpaul695@gmail.com">buterpaul695@gmail.com</a>
+                        <li>
+                            <i class="fa fa-envelope"></i>
+                            <a href="mailto: buterpaul695@gmail.com">buterpaul695@gmail.com</a>
                         </li>
-                        <li><i class="fa fa-github"></i><a href="https://github.com/butlerpaul1"
-                                target="_blank">https://github.com/butlerpaul1</a>
+                        <li>
+                            <i class="fa fa-github"></i>
+                            <a href="https://github.com/butlerpaul1" target="_blank">Github</a>
                         </li>
-                        <li><i class="fa fa-map-marker"></i>London
+                        <li>
+                            <i class="fa fa-linkedin"></i>
+                            <a href="https://www.linkedin.com/in/paul-butler-41281419b/" target="_blank">Linkedin</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-map-marker"></i>London
                         </li>
                     </ul>
                 </div>
@@ -58,13 +67,6 @@
                     </ul>
                 </div>
 
-                <div class="references">
-                    <p class="left-title">References</p>
-                    <div class="refer">
-                        <p class="referance-profession">Available on request.</p>
-                    </div>
-                </div>
-
                 <div class="awards">
                     <p class="left-title">Awards & Certificates</p>
                     <div class="refer">
@@ -72,6 +74,12 @@
                         <p class="award-name">Leadership & Management</p>
                         <p class="award-grade">Distinction</p>
                         <p class="award-time-period">2021</p>
+                    </div>
+                    <div class="refer">
+                        <p class="award-company-name">Microsoft Certified</p>
+                        <p class="award-name">Azure Fundamentals</p>
+                        <p class="award-grade">Microsoft</p>
+                        <p class="award-time-period">2022</p>
                     </div>
                 </div>
             </div>
@@ -82,13 +90,9 @@
                 <section class="about gap">
                     <div class="right-title">About Me</div>
                     <p class="about-me-contents">
-                        Skilled software engineer with 3+ years of hands-on experience supporting, automating, and
-                        optimizing client
-                        deployments both on prem and in hosted environments leveraging CI/CD and DevOps processes. I
-                        joined
-                        DOCOsoft as a technical engineer in support and have progressed to a software engineer and now a
-                        DevOps
-                        engineer.
+                        Skilled software engineer with hands-on experience supporting, automating, and optimising
+                        deployments in on prem and hosted environments leveraging DevOps processes. Strong information technology professional with a
+                        Bachelor's degree focused in Computer Science from Technological University, Dublin.
                     </p>
                 </section>
 
@@ -97,6 +101,7 @@
                     <div class="experience-contents">
                         <div class="exp-left">
                             <p class="exp-company-name">DOCOsoft</p>
+                            <p class="exp-time-period">2018-Current</p>
                         </div>
                         <div class="exp-right">
                             <p class="exp-position">Technical Engineer</p>
@@ -143,9 +148,17 @@
                         </div>
                     </div>
                 </section>
+
+                <section class="references gap">
+                    <div class="right-title">References</div>
+                    <div class="references-contents">
+                        <div class="references-left">
+                            <p class="references-name">Available on request.</p>
+                        </div>
+                    </div>
+                </section>
+                
             </div>
-        </section>
-        </div>
         </section>
     </main>
 </body>

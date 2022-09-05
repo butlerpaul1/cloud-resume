@@ -49,7 +49,6 @@ body {
     color: #D6DBDF;
     font-size: 30px;
     letter-spacing: 2px;
-    text-transform: uppercase;
     text-align: center;
     font-weight: bold;
     padding: 1rem 0;
@@ -58,7 +57,6 @@ body {
 .profession {
     color: #F9E79F;
     font-size: 20px;
-    text-transform: uppercase;
     text-align: center;
     letter-spacing: 2px;
     font-weight: bold;
@@ -70,7 +68,6 @@ body {
     color: #D6DBDF;
     font-size: 20px;
     letter-spacing: 2px;
-    text-transform: uppercase;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -82,7 +79,6 @@ body {
 }
 
 .contact-info ul li,
-.references ul li
 .awards ul li {
     padding: .4rem 0;
     display: flex;
@@ -93,7 +89,6 @@ body {
 }
 
 .contact-info ul li i,
-.references ul li i
 .awards ul li i {
     padding-right: 1rem;
     font-size: 18px;
@@ -111,7 +106,6 @@ body {
     letter-spacing: 1px;
     display: flex;
     align-items: center;
-    text-transform: uppercase;
 }
 
 .referance-name, .award-company-name {
@@ -120,7 +114,6 @@ body {
     font-size: 18px;
     color: #F9E79F;
     letter-spacing: 1px;
-    text-transform: uppercase;
 }
 
 .referance-profession, 
@@ -130,7 +123,6 @@ body {
     font-size: 16px;
     color: #d6dbdfaf;
     letter-spacing: 1px;
-    /* text-transform: uppercase; */
     padding-bottom: .4rem;
 }
 
@@ -143,7 +135,6 @@ body {
     color: #34495E;
     font-size: 40px;
     letter-spacing: 2px;
-    text-transform: uppercase;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -162,7 +153,8 @@ body {
 }
 
 .experience-contents,
-.education-contents {
+.education-contents,
+.references-contents {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     padding-bottom: 2rem;
@@ -172,7 +164,6 @@ body {
 .education-school-name{
     font-size: 25px;
     font-weight: bold;
-    text-transform: none;
     letter-spacing: 1px;
     color: #21638f;
     padding-bottom: .4rem;
@@ -187,7 +178,8 @@ body {
 }
 
 .exp-grade,
-.education-grade{
+.education-grade,
+.references-name{
     font-size: 18px;
     letter-spacing: 1px;
     line-height: 2rem;
@@ -198,7 +190,6 @@ body {
 .education-subject {
     font-size: 25px;
     font-weight: bold;
-    text-transform: none;
     letter-spacing: 1px;
     color: #2E86C1;
     padding-bottom: .4rem;
@@ -217,7 +208,8 @@ body {
 @media screen and (max-width:780px) {
 
     .experience-contents,
-    .education-contents {
+    .education-contents,
+    .references-contents {
         grid-template-columns: repeat(1, 1fr);
     }
 }
@@ -262,13 +254,11 @@ body {
     }
 
     .contact-info ul li,
-    .references ul li,
     .awards ul li {
         font-size: 12px;
     }
 
     .contact-info ul li i,
-    .references ul li i,
     .awards ul li i {
         /* padding-right: 1rem; */
         font-size: 12px;
