@@ -82,6 +82,14 @@
                         <p class="award-time-period">2022</p>
                     </div>
                 </div>
+
+                <div class="counter">
+                    <p class="left-title"></p>
+                    <div class="refer">
+                        <p class="counter-count">Current Visitor Count: <span id="visitorCount"></span></p>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -120,6 +128,7 @@
                             </p>
                         </div>
                     </div>
+
                     <div class="experience-contents">
                         <div class="exp-left">
                             <p class="exp-company-name">ML Gannon & Sons LTD</p>
@@ -161,6 +170,20 @@
             </div>
         </section>
     </main>
+
+    <script>
+        function getUserCount() {
+            const url = 'api/visitorCounter'
+            fetch(url)
+                .then(data => {
+                    return data.json()
+                })
+                .then(res => {
+                    let visitorCount = res;
+                    document.getElementById("visitorCount").innerHTML = visitorCount;
+                })
+        }
+    </script>
 </body>
 
 </html>

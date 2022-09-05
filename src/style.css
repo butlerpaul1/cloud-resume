@@ -79,7 +79,8 @@ body {
 }
 
 .contact-info ul li,
-.awards ul li {
+.awards ul li,
+.counter ul li {
     padding: .4rem 0;
     display: flex;
     align-items: center;
@@ -89,7 +90,8 @@ body {
 }
 
 .contact-info ul li i,
-.awards ul li i {
+.awards ul li i,
+.counter ul li i {
     padding-right: 1rem;
     font-size: 18px;
     color: #2E86C1;
@@ -108,7 +110,9 @@ body {
     align-items: center;
 }
 
-.referance-name, .award-company-name {
+.referance-name, 
+.award-company-name,
+.counter-count {
     padding-top: 1.5rem;
     padding-bottom: .4rem;
     font-size: 18px;
@@ -254,12 +258,14 @@ body {
     }
 
     .contact-info ul li,
-    .awards ul li {
+    .awards ul li,
+    .counter ul li {
         font-size: 12px;
     }
 
     .contact-info ul li i,
-    .awards ul li i {
+    .awards ul li i,
+    .counter ul li i {
         /* padding-right: 1rem; */
         font-size: 12px;
     }
