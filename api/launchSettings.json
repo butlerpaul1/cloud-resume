@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "cloud_resume": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7167",
+      "launchBrowser": false
+    }
+  }
+}
