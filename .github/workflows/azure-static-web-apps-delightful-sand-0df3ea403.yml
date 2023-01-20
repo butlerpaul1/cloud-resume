@@ -22,15 +22,19 @@ jobs:
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_DELIGHTFUL_SAND_0DF3EA403 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          # Action to perform
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/src" # App source code path
-          api_location: "/api" # Api source code path - optional
-          output_location: "public" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          # Directory location of the application source code
+          app_location: "/src"
+          # Directory location of the Azure Functions source code
+          api_location: "/api"
+          # Required token
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_DELIGHTFUL_SAND_0DF3EA403 }}
+          # Custom command for Oryx to run when building Azure Functions source code
+          output_location: "dist"
+          # Token for interacting with the Github repository. Currently used only for commenting on Pull Requests.
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          # Directory location where the routes.json file can be found in the source code
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
