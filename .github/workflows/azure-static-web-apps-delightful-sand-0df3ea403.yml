@@ -34,7 +34,6 @@ jobs:
           output_location: "dist"
           # Token for interacting with the Github repository. Currently used only for commenting on Pull Requests.
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          # Directory location where the routes.json file can be found in the source code
           # Custom command for Oryx to run when building application source code
           app_build_command: npm run build
 
