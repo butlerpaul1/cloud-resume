@@ -2,7 +2,7 @@ name: Cloud Resume CI/CD
 
 env:
   test_project_path: your-test-project-path
-  configuration: Debug
+  configuration: Release
 
 on:
   push:
