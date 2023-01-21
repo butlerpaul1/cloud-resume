@@ -45,10 +45,10 @@ jobs:
         run: dotnet restore cloud-resume.csproj
       - name: Build API
         working-directory: ./api
-        run: dotnet build cloud-resume.csproj --c ${{ env.configuration }} --no-restore
+        run: dotnet build cloud-resume.csproj -c ${{ env.configuration }} --no-restore
       - name: Pubish API
         working-directory: ./api
-        run: dotnet publish cloud-resume.csproj --c ${{ env.configuration }}
+        run: dotnet publish cloud-resume.csproj -c ${{ env.configuration }}
       
       - run: ls -R
 
