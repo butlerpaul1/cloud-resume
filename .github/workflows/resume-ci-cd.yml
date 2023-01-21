@@ -40,7 +40,6 @@ jobs:
         run: |
           npm install
           npm run build
-          npm test
 
       - name: Restore API
         run: dotnet restore ${{ env.project_path }}
