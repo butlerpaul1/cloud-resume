@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "postbuild": "copyfiles src/index.html dist; copyfiles src/style.css dist; copyfiles src/img/profile-pic.jpg dist",
-    "test": "echo \"No tests yet..."
+    "test": "echo \"No tests yet...\" && exit 1"
   },
   "devDependencies": {
     "typescript": "^4.9.4"
