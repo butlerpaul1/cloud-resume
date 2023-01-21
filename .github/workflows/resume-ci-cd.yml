@@ -41,20 +41,22 @@ jobs:
           npm install
           npm run build
 
-      - name: Restore API
-        run: dotnet restore ${{ env.project_path }}
-      - name: Build API
-        run: dotnet build ${{ env.project_path }}  --c ${{ env.configuration }} --no-restore
-      #- name: Test
-       # run: dotnet test --no-restore --verbosity normal
-      - name: Pubish API
-        run: dotnet publish ${{ env.project_path }}  --c ${{ env.configuration }}
+      # - run: npm install -g bats
+
+      # - name: Restore API
+      #   run: dotnet restore ${{ env.project_path }}
+      # - name: Build API
+      #   run: dotnet build ${{ env.project_path }}  --c ${{ env.configuration }} --no-restore
+      # #- name: Test
+      #  # run: dotnet test --no-restore --verbosity normal
+      # - name: Pubish API
+      #   run: dotnet publish ${{ env.project_path }}  --c ${{ env.configuration }}
       
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: Deployment-Packages
           path: |
-            src/dist
-            api/bin/Release/net6.0/publish/
+            dist
+           # api/bin/Release/net6.0/publish/
 
