@@ -50,8 +50,6 @@ jobs:
         working-directory: ./api
         run: dotnet publish cloud-resume.csproj -c ${{ env.configuration }}
       
-      - run: ls -R
-
       - name: Zip Published Folder
         working-directory: ./api/bin/Release/net6.0/publish/
         run: zip visitor-counter ./* -r 
