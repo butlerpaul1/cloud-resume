@@ -52,11 +52,15 @@ jobs:
       
       - run: ls -R
 
+      - name: Zip Published Folder
+        working-directory: ./api/bin/Release/net6.0/publish/
+        run: zip visitor-counter ./* -r 
+
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: Deployment-Packages
           path: |
             dist
-            ./api/bin/Release/net6.0/publish/
+            ./api/**/*.zip
 
