@@ -1,7 +1,7 @@
 name: Cloud Resume CI/CD
 
 env:
-  project_path: .\api\cloud-resume.csproj
+  project_path: /api/cloud-resume.csproj
   test_project_path: your-test-project-path
   configuration: Debug
 
@@ -55,6 +55,6 @@ jobs:
         with:
           name: Deployment-Packages
           path: |
-            src\dist
-            api\bin\Release\net6.0\publish\
+            src/dist
+            api/bin/Release/net6.0/publish/
 
