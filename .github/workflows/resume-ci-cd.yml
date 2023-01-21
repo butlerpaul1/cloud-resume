@@ -41,7 +41,7 @@ jobs:
           npm install
           npm run build
 
-      - run: ls - R
+      - run: ls -R
 
       # - name: Restore API
       #   run: dotnet restore ${{ env.project_path }}
