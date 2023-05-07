@@ -1,52 +1,45 @@
-name: Static Web Apps CI
+name: Azure Static Web Apps CI
 
 on:
   push:
     branches:
       - master
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - master
     paths:
-      - 'iac/**'
+      - 'src/**'
+      - 'api/**'
+
 jobs:
-  deploy:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    env:
-        environmentName: ci
-        resourceGroupName: cloud-resume-ci
-        resourceGroupLocation: "West Europe"
+    name: Build and Deploy WebApp CI
     steps:
-      # Checkout code
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
-      
-      #Replace tokens
-      - name: Replace tokens
-        uses: cschleiden/replace-tokens@v1.2
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          files: ./iac/parameters.json
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEBAPP_TOKEN_CI }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/src"
+          api_location: "/api"
+          output_location: "public"
 
-      # Log into Azure
-      - uses: azure/login@v1
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      #Create the resource group
-      - name: Azure CLI Action
-        uses: Azure/cli@v1.0.7
-        with:
-          inlineScript: az group create --name $resourceGroupName --location $resourceGroupLocation
-      
-      # Deploy ARM template
-      - name: Run ARM deploy
-        uses: azure/arm-deploy@v1
-        with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: $resourceGroupName
-          template: ./iac/template.json
-          parameters: ./iac/parameters.json
-
-      #Create the resource group
-      - name: Azure CLI Action
-        uses: Azure/cli@v1.0.7
-        with:
-          inlineScript: az group delete --resource-group $resourceGroupName --yes
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEBAPP_TOKEN_CI }}
+          action: "close" 
