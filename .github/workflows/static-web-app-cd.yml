@@ -1,0 +1,78 @@
+name: Static Web Apps CD
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - master
+    paths:
+      - 'iac/**'
+jobs:
+  deploy:
+    needs: build_and_deploy_job
+    name: Deploy IAC & WebApp CD
+    runs-on: ubuntu-latest
+    env:
+      environmentName: ci
+      resourceGroupName: cloud-resume-ci-${{ github.run_id }}
+      resourceGroupLocation: "West Europe"
+      branchName: ${{ github.ref_name }}
+    steps:
+      # Checkout code
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      
+      #Replace tokens
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.2
+        with:
+          files: ./iac/parameters.json
+
+      # Log into Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      #Create the Resource group
+      - name: Create Resource Group
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: az group create --name $resourceGroupName --location "$resourceGroupLocation"
+      
+      # Deploy ARM template
+      - name: Run ARM deploy
+        id: armDeploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ env.resourceGroupName }}
+          template: ./iac/template.json
+          parameters: ./iac/parameters.json
+      
+      #Deploy Static Web App
+      - name: Build And Deploy Static WebApp
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ steps.armDeploy.outputs.staticWebAppApiKey }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/src" 
+          api_location: "/api" 
+          output_location: "public" 
+
+      #Delete the resource group
+      - name: Delete Resource Group
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: az group delete --resource-group "$resourceGroupName" --yes
+
+      #Purge App Configuration
+      - name: Purge App Configuration
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: az appconfig purge --name ${{ steps.armDeploy.outputs.appConfigVaultName }} --yes
