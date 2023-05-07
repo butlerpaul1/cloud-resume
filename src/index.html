@@ -19,6 +19,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <script src="user.js"></script>
 </head>
 
 <body onload="getUserCount()">
@@ -95,7 +96,8 @@
                     <div class="right-title">About Me</div>
                     <p class="about-me-contents">
                         Skilled software engineer with hands-on experience supporting, automating, and optimising
-                        deployments in on prem and hosted environments leveraging DevOps processes. Strong information technology professional with a
+                        deployments in on prem and hosted environments leveraging DevOps processes. Strong information
+                        technology professional with a
                         Bachelor's degree focused in Computer Science from Technological University, Dublin.
                     </p>
                 </section>
@@ -162,24 +164,10 @@
                         </div>
                     </div>
                 </section>
-                
+
             </div>
         </section>
     </main>
-
-    <script>
-        function getUserCount() {
-            const url = 'api/visitorCounter'
-            fetch(url)
-                .then(data => {
-                    return data.json()
-                })
-                .then(res => {
-                    let visitorCount = res;
-                    document.getElementById("visitorCount").innerHTML = visitorCount;
-                })
-        }
-    </script>
 </body>
 
 </html>

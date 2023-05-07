@@ -1,0 +1,64 @@
+name: Cloud Resume CI/CD
+
+env:
+  test_project_path: your-test-project-path
+  configuration: Release
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - master
+
+jobs:
+  build_and_test:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      # Install the .NET Core workload
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Setup Node.js 
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Build And Test Web App
+        run: |
+          npm install
+          npm run build
+
+      - name: Restore API
+        working-directory: ./api
+        run: dotnet restore cloud-resume.csproj
+      - name: Build API
+        working-directory: ./api
+        run: dotnet build cloud-resume.csproj -c ${{ env.configuration }} --no-restore
+      - name: Pubish API
+        working-directory: ./api
+        run: dotnet publish cloud-resume.csproj -c ${{ env.configuration }}
+      
+      - name: Zip Published Folder
+        working-directory: ./api/bin/Release/net6.0/publish/
+        run: zip visitor-counter ./* -r 
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Deployment-Packages
+          path: |
+            dist
+            ./api/**/*.zip
+
