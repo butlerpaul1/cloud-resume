@@ -43,6 +43,7 @@ jobs:
       
       # Deploy ARM template
       - name: Run ARM deploy
+        id: armDeploy
         uses: azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
@@ -55,3 +56,9 @@ jobs:
         uses: Azure/cli@v1.0.7
         with:
           inlineScript: az group delete --resource-group "$resourceGroupName" --yes
+
+      #Purge App Configuration
+      - name: Delete Resource Group
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: az appconfig purge --name ${{ steps.armDeploy.outputs.appConfigVaultName }} --yes

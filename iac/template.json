@@ -30,7 +30,9 @@
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+        "staticWebAppId": "[resourceId('Microsoft.Web/staticSites/', parameters('staticSites_web_app_name'))]"
+    },
     "resources": [
         {
             "type": "Microsoft.AppConfiguration/configurationStores",
@@ -176,5 +178,15 @@
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "staticWebAppApiKey": {
+            "type": "string",
+            "value": "[listSecrets(variables('staticWebAppId'), '2022-03-01').properties.apiKey]"
+        },
+        "appConfigVaultName": {
+            "type": "string",
+            "value": "[parameters('configurationStores_vault_name')]"
+        }
+    }
 }
