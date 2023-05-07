@@ -14,7 +14,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    name: Build and Deploy Job CI
+    name: Build and Deploy WebApp CI
     steps:
       - uses: actions/checkout@v2
         with:
@@ -31,6 +31,7 @@ jobs:
           output_location: "public" 
   deploy:
     needs: build
+    name: Deploy IAC & WebApp CD
     runs-on: ubuntu-latest
     env:
       environmentName: ci
