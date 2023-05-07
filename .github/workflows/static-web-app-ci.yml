@@ -9,20 +9,21 @@ on:
     branches:
       - master
     paths:
-      - 'iac/**'
+      - "iac/**"
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-        environmentName: ci
-        resourceGroupName: cloud-resume-ci
-        resourceGroupLocation: "West Europe"
+      environmentName: ci
+      resourceGroupName: cloud-resume-ci-${{ github.run_id }
+      resourceGroupLocation: "West Europe"
+      branchName: ${{ github.ref_name }}"
     steps:
       # Checkout code
       - uses: actions/checkout@v2
         with:
           submodules: true
-      
+
       #Replace tokens
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.2
@@ -39,7 +40,7 @@ jobs:
         uses: Azure/cli@v1.0.7
         with:
           inlineScript: az group create --name $resourceGroupName --location "$resourceGroupLocation"
-      
+
       # Deploy ARM template
       - name: Run ARM deploy
         uses: azure/arm-deploy@v1

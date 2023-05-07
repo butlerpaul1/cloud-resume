@@ -27,7 +27,7 @@
             "value": "visitors"
         },
         "branchName": {
-            "value": "develop"
+            "value": "#{branchName}#"
         }
     }
 }
