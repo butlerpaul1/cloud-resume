@@ -8,6 +8,8 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - master
+    paths:
+      - 'iac/**'
 jobs:
   deploy:
     name: Deploy IAC & WebApp CD
