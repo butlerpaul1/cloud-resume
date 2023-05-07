@@ -68,7 +68,7 @@ jobs:
       - name: Delete Resource Group
         uses: Azure/cli@v1.0.7
         with:
-          inlineScript: az group delete --resource-group "$resourceGroupName" --yes
+          inlineScript: az group delete --resource-group "$resourceGroupName" --yes --no-wait
 
       #Purge App Configuration
       - name: Purge App Configuration
