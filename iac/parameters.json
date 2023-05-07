@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "staticSites_web_app_name": {
+            "value": "cloud-resume-website-#{environmentName}"
+        },
+        "databaseAccounts_database_name": {
+            "value": "cloud-resume-database-#{environmentName}"
+        },
+        "database_name": {
+            "value": "CloudResume"
+        },
+        "configurationStores_vault_name": {
+            "value": "cloud-resume-vault-#{environmentName}"
+        },
+        "configurationStores_vault_location": {
+            "value": "westeurope"
+        },
+        "staticSites_web_app_location": {
+            "value": "West Europe"
+        },
+        "databaseAccounts_database_location": {
+            "value": "West Europe"
+        },
+        "collection_name": {
+            "value": "visitors"
+        },
+        "branchName": {
+            "value": "develop"
+        }
+    }
+}

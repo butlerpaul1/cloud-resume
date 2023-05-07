@@ -1,0 +1,52 @@
+name: Static Web Apps CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'iac/**'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+        environmentName: ci
+        resourceGroupName: cloud-resume-ci
+        resourceGroupLocation: "West Europe"
+    steps:
+      # Checkout code
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      
+      #Replace tokens
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.2
+        with:
+          files: ./iac/parameters.json
+
+      # Log into Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      #Create the resource group
+      - name: Azure CLI Action
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: az group create --name $resourceGroupName --location $resourceGroupLocation
+      
+      # Deploy ARM template
+      - name: Run ARM deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: $resourceGroupName
+          template: ./iac/template.json
+          parameters: ./iac/parameters.json
+
+      #Create the resource group
+      - name: Azure CLI Action
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: az group delete --resource-group $resourceGroupName --yes
