@@ -1,4 +1,4 @@
-name: Static Web Apps CD
+name: Azure Static Web Apps CD
 
 on:
   push:
