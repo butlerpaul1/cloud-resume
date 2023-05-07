@@ -11,7 +11,26 @@ on:
     paths:
       - 'iac/**'
 jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job CI
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEBAPP_TOKEN_CI }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/src"
+          api_location: "/api"
+          output_location: "public" 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     env:
       environmentName: ci
