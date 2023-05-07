@@ -10,7 +10,6 @@ on:
       - master
 jobs:
   deploy:
-    needs: build_and_deploy_job
     name: Deploy IAC & WebApp CD
     runs-on: ubuntu-latest
     env:
