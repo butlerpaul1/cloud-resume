@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       environmentName: ci
-      resourceGroupName: cloud-resume-ci-${{ github.run_id }
+      resourceGroupName: cloud-resume-ci-${{ github.run_id }}
       resourceGroupLocation: "West Europe"
       branchName: ${{ github.ref_name }}"
     steps:
