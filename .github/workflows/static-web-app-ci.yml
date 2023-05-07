@@ -17,7 +17,7 @@ jobs:
       environmentName: ci
       resourceGroupName: cloud-resume-ci-${{ github.run_id }}
       resourceGroupLocation: "West Europe"
-      branchName: ${{ github.ref_name }}"
+      branchName: ${{ github.ref_name }}
     steps:
       # Checkout code
       - uses: actions/checkout@v2
