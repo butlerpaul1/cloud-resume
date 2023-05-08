@@ -49,8 +49,12 @@ namespace Visitor.Function
             log.LogInformation("Getting visitor count.");
             int visitorCount = GetVisitorCount(_visitors);
 
-            log.LogInformation($"Current Vistor Count: {visitorCount}");
-            string response = $"{visitorCount}";
+            int updatedVisitorCount = visitorCount + 1;
+            UpdateVisitorCount(_visitors, updatedVisitorCount);
+
+            //return the updated user count 
+            log.LogInformation($"Current Vistor Count: {updatedVisitorCount}");
+            string response = $"{updatedVisitorCount}";
 
             return new OkObjectResult(response);
         }
@@ -63,10 +67,7 @@ namespace Visitor.Function
         public static int GetVisitorCount(IMongoCollection<Visitor> _visitors)
         {
             int visitorCount = (int)_visitors.EstimatedDocumentCount();
-            int updatedVisitorCount = visitorCount++;
-            UpdateVisitorCount(_visitors, updatedVisitorCount);
-
-            return updatedVisitorCount;
+            return visitorCount;
         }
 
         /// <summary>
