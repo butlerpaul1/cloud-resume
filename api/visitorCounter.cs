@@ -13,7 +13,7 @@ namespace Visitor.Function
     /// Logs an entry to a cosmo db api table to record the time a user accessed the website
     /// and returns the current user count.
     /// </summary>
-    public class visitorCounter
+    public class VisitorCounter
     {
         /// <summary>
         /// set of key vaule pairs obtained from azure configuration.
@@ -24,7 +24,7 @@ namespace Visitor.Function
         /// obtain an instance of the IConfiguration 
         /// </summary>
         /// <param name="configuration">IConfiguration </param>
-        public visitorCounter(IConfiguration configuration)
+        public VisitorCounter(IConfiguration configuration)
         {
             _configuration = configuration;
         }
