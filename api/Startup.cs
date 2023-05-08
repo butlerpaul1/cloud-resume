@@ -19,7 +19,6 @@ namespace FunctionApp
             string keyVaultURI = string.Format("https://{0}.vault.azure.net/", keyVault);
 
             builder.ConfigurationBuilder
-                          .AddAzureAppConfiguration(AppConfigConnString)
                           .AddEnvironmentVariables()
                           .AddAzureKeyVault(new Uri(keyVaultURI), new DefaultAzureCredential())
                           .Build();
