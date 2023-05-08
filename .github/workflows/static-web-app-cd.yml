@@ -67,20 +67,20 @@ jobs:
       #Delete the resource group
       - name: Delete Resource Group
         uses: Azure/cli@v1.0.7
-        if: ${{ env.environmentName }} == 'cicd'
+        if: ${{ env.environmentName == 'cicd' }}
         with:
           inlineScript: az group delete --resource-group "$resourceGroupName" --yes
 
       #Purge Key Vault
       - name: Purge Key Vault
         uses: Azure/cli@v1.0.7
-        if: ${{ env.environmentName }} == 'cicd'
+        if: ${{ env.environmentName == 'cicd' }}
         with:
           inlineScript: az keyvault purge --name ${{ steps.armDeploy.outputs.keyVaultName }} --no-wait
 
       #Purge App Configuration
       - name: Purge App Configuration
         uses: Azure/cli@v1.0.7
-        if: ${{ env.environmentName }} == 'cicd'
+        if: ${{ env.environmentName == 'cicd' }}
         with:
           inlineScript: az appconfig purge --name ${{ steps.armDeploy.outputs.appConfigVaultName }} --yes
