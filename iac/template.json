@@ -277,6 +277,18 @@
                 "provisioningState": "Succeeded",
                 "publicNetworkAccess": "Enabled"
             }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2023-02-01",
+            "name": "[format('{0}/{1}', parameters('key_vault_name'), 'DBConnectionString')]",
+            "properties": {
+                "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_database_name')), '2022-08-15').connectionStrings[0].connectionString]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('key_vault_name'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_database_name'))]"
+            ]
         }
     ],
     "outputs": {
@@ -291,10 +303,6 @@
         "keyVaultName": {
             "type": "string",
             "value": "[parameters('key_vault_name')]"
-        },
-        "CosmosConnection": {
-            "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_database_name')), '2022-08-15').connectionStrings[0].connectionString]",
-            "type": "string"
         }
     }
 }
