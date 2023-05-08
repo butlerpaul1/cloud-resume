@@ -287,6 +287,14 @@
         "appConfigVaultName": {
             "type": "string",
             "value": "[parameters('configurationStores_vault_name')]"
+        },
+        "keyVaultName": {
+            "type": "string",
+            "value": "[parameters('key_vault_name')]"
+        },
+        "CosmosConnection": {
+            "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_database_name')), '2022-08-15').connectionStrings[0].connectionString]",
+            "type": "string"
         }
     }
 }
