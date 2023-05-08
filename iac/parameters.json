@@ -12,16 +12,10 @@
             "value": "CloudResume"
         },
         "configurationStores_vault_name": {
+            "value": "cloud-resume-config-#{environmentName}#"
+        },
+        "key_vault_name": {
             "value": "cloud-resume-vault-#{environmentName}#"
-        },
-        "configurationStores_vault_location": {
-            "value": "westeurope"
-        },
-        "staticSites_web_app_location": {
-            "value": "West Europe"
-        },
-        "databaseAccounts_database_location": {
-            "value": "West Europe"
         },
         "collection_name": {
             "value": "visitors"

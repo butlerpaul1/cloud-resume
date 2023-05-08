@@ -5,9 +5,6 @@
         "staticSites_web_app_name": {
             "type": "String"
         },
-        "staticSites_web_app_location": {
-            "type": "String"
-        },
         "databaseAccounts_database_name": {
             "type": "String"
         },
@@ -17,16 +14,13 @@
         "collection_name": {
             "type": "String"
         },
-        "databaseAccounts_database_location": {
-            "type": "String"
-        },
         "configurationStores_vault_name": {
             "type": "String"
         },
-        "configurationStores_vault_location": {
+        "branchName": {
             "type": "String"
         },
-        "branchName": {
+        "key_vault_name": {
             "type": "String"
         }
     },
@@ -38,7 +32,7 @@
             "type": "Microsoft.AppConfiguration/configurationStores",
             "apiVersion": "2022-05-01",
             "name": "[parameters('configurationStores_vault_name')]",
-            "location": "[parameters('configurationStores_vault_location')]",
+            "location": "[resourceGroup().location]",
             "sku": {
                 "name": "standard"
             },
@@ -53,7 +47,7 @@
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "apiVersion": "2022-11-15",
             "name": "[parameters('databaseAccounts_database_name')]",
-            "location": "[parameters('databaseAccounts_database_location')]",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "defaultExperience": "Azure Cosmos DB for MongoDB API",
                 "hidden-cosmos-mmspecial": ""
@@ -90,7 +84,7 @@
                 },
                 "locations": [
                     {
-                        "locationName": "[parameters('databaseAccounts_database_location')]",
+                        "locationName": "[resourceGroup().location]",
                         "provisioningState": "Succeeded",
                         "failoverPriority": 0,
                         "isZoneRedundant": false
@@ -128,10 +122,13 @@
             "type": "Microsoft.Web/staticSites",
             "apiVersion": "2022-03-01",
             "name": "[parameters('staticSites_web_app_name')]",
-            "location": "[parameters('staticSites_web_app_location')]",
+            "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Free",
-                "tier": "Free"
+                "name": "Standard",
+                "tier": "Standard"
+            },
+            "identity": {
+                "type": "SystemAssigned"
             },
             "properties": {
                 "repositoryUrl": "https://github.com/butlerpaul1/cloud-resume",
@@ -177,6 +174,121 @@
                     ]
                 }
             }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2023-02-01",
+            "name": "[parameters('key_vault_name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/staticSites', parameters('staticSites_web_app_name'))]"
+            ],
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                },
+                "tenantId": "[subscription().tenantId]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[reference(resourceId('Microsoft.Web/staticSites', parameters('staticSites_web_app_name')), '2022-03-01', 'Full').identity.principalId]",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "GetRotationPolicy",
+                                "SetRotationPolicy",
+                                "Rotate"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    },
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "4227b4b6-11d7-4ae5-9f6a-47dd10b57f87",
+                        "permissions": {
+                            "certificates": [],
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "GetRotationPolicy",
+                                "SetRotationPolicy",
+                                "Rotate"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ]
+                        }
+                    }
+                ],
+                "enabledForDeployment": false,
+                "enabledForDiskEncryption": false,
+                "enabledForTemplateDeployment": false,
+                "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 90,
+                "enableRbacAuthorization": false,
+                "vaultUri": "[concat('https://', parameters('key_vault_name'), '.vault.azure.net/')]",
+                "provisioningState": "Succeeded",
+                "publicNetworkAccess": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2023-02-01",
+            "name": "[format('{0}/{1}', parameters('key_vault_name'), 'DBConnectionString')]",
+            "properties": {
+                "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_database_name')), '2022-08-15').connectionStrings[0].connectionString]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('key_vault_name'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_database_name'))]"
+            ]
         }
     ],
     "outputs": {
@@ -187,6 +299,10 @@
         "appConfigVaultName": {
             "type": "string",
             "value": "[parameters('configurationStores_vault_name')]"
+        },
+        "keyVaultName": {
+            "type": "string",
+            "value": "[parameters('key_vault_name')]"
         }
     }
 }
