@@ -70,6 +70,12 @@ jobs:
         with:
           inlineScript: az group delete --resource-group "$resourceGroupName" --yes
 
+      #Purge Key Vault
+      - name: Purge Key Vault        
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: az keyvault purge --name ${{ steps.armDeploy.outputs.keyVaultName }} --no-wait
+
       #Purge App Configuration
       - name: Purge App Configuration
         uses: Azure/cli@v1.0.7
