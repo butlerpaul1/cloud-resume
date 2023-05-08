@@ -15,7 +15,7 @@ jobs:
     name: Deploy IAC & WebApp CICD
     runs-on: ubuntu-latest
     env:
-      environmentName: cicd
+      environmentName: pr
       resourceGroupName: cloud-resume-ci-${{ github.run_id }}
       resourceGroupLocation: "West Europe"
       branchName: ${{ github.ref_name }}
